@@ -1,4 +1,5 @@
-This is my solution to monitor my home's water usage at very low cost by reading my analog water meter:
+This is my solution to monitor my home's water usage at very low cost, and get it tracked by the
+Energy Dashboard in Home Assistant, by reading my analog water meter:
 
 <p align="center">
   <img src="images/water-meter.jpg" width="250"> 
@@ -40,7 +41,17 @@ sensor. 1 rotation cycle = 1 liter, thus measuring each liter consumption.
 - 3× Cross round Phillips pan head screw bolt M3, length 6mm
 - Straight pin PCB screw terminal block connector (I used 2× KF301-2P, but you could easily get a 1× KF301-3P)
 
-You can 3D-print the mount and encloser with [aquabasic.stl](aquabasic.stl).
+**Note:** Be sure to buy a LJ18A3 sensor, and make sure it's a 5V version so that it can be powered
+directly from the ESP.
+
+
+## Wiring
+
+| Proximity Sensor LJ18A3-8-Z/BX | ESP8266 (ESP32) |
+|--------------------------------|-----------------|
+| Black                          | D6              |
+| Orange/Pink/Brown              | 5V (VIN)        |
+| Blue                           | Ground (G/GRN)  |
 
 
 ## Code
@@ -136,6 +147,19 @@ sensor:
 **Note:** In order to preset the total number of your counter, you can open
 Home Assistant > Parameters > Developer Tools > Actions and make use of the API action
 defined in the YAML definition.
+
+
+## 3D-Printed Mount and Enclosure
+
+<p align="center">
+  <img src="images/fusion-preview.png" width="500"> 
+</p>
+
+I designed the mount and enclosure in Autodesk Fusion. STL file [aquabasic.stl](aquabasic.stl)
+contains everything you need.
+
+**Hint:** You should print the water meter mount upside down to lower the number of supports
+required.
 
 
 ## Additional Reading
