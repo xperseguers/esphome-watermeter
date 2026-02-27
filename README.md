@@ -136,3 +136,11 @@ sensor:
 **Note:** In order to preset the total number of your counter, you can open
 Home Assistant > Parameters > Developer Tools > Actions and make use of the API action
 defined in the YAML definition.
+
+
+## Additional Reading
+
+Some additional useful links I used (or could have used) for this project:
+
+- [Build a cheap water usaage sensor using ESPhome and a proximity sensor](https://www.pieterbrinkman.com/2022/02/02/build-a-cheap-water-usage-sensor-using-esphome-home-assistant-and-a-proximity-sensor/)
+- [3D-printable adapters for other water meter brands](https://www.printables.com/tag/watermeter?lang=en)
