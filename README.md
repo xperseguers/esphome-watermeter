@@ -51,6 +51,9 @@ esphome:
   friendly_name: water-meter
   on_boot:
     then:
+      - globals.set:
+          id: data_was_restored
+          value: 'true'
       - pulse_meter.set_total_pulses: 
           id: water_pulse_meter
           value: !lambda 'return id(water_meter_total);'
@@ -63,9 +66,13 @@ preferences:
   flash_write_interval: 5min
 
 globals:
-  id: water_meter_total
-  type: int
-  restore_value: yes
+  - id: water_meter_total
+    type: int
+    restore_value: yes
+    initial_value: '0'
+  - id: data_was_restored
+    type: bool
+    initial_value: '0'
 
 # Enable logging
 logger:
@@ -108,14 +115,22 @@ sensor:
     icon: "mdi:water"
     total:
       name: "Water Meter Total"
+      id: total_water_consumption
       unit_of_measurement: "m³"
       accuracy_decimals: 3
       device_class: water
       state_class: total_increasing
+      on_value:
+        then:
+          - if:
+              # This avoids overriding the total_water_consumption global
+              # before the value is restored by on_boot
+              condition:
+                lambda: 'return id(data_was_restored);'
+              then:
+                lambda: 'id(water_meter_total) = id(total_water_consumption).raw_state;'
       filters:
-        - lambda: |-
-            id(water_meter_total) = id(water_pulse_meter).raw_state;
-            return x / 1000.0;
+        - multiply: 0.001
 ```
 
 **Note:** In order to preset the total number of your counter, you can open
